@@ -4,6 +4,7 @@ import {
 	SHORTEN_LINK_REQUEST,
 	SHORTEN_LINK_SUCCESS,
 	SHORTEN_LINK_FAILURE,
+	VALIDATE_URL,
 } from '../constants'
 
 export const shorten = (state = '', action) => {
@@ -27,7 +28,17 @@ export const isFetching = (state = false, action) => {
 	}
 }
 
+export const isValid = (state = false, action) => {
+	switch (action.type) {
+	case VALIDATE_URL:
+		return /^https?:\/\/.*$/.test(action.url)
+	default:
+		return state
+	}
+}
+
 export default combineReducers({
 	shorten,
 	isFetching,
+	isValid,
 })

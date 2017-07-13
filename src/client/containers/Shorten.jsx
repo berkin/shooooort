@@ -1,22 +1,29 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { shorten } from '../actions'
+import { validateUrl } from '../actions/validate'
 
-const ShortenContainer = ({ dispatch }) => {
+const ShortenContainer = ({ dispatch, isValid }) => {
 	let input
 
 	return (
 		<div>
 			<input
-				value="http://www.google.com"
+				onInput={() => {
+					dispatch(validateUrl(input.value))
+				}}
 				ref={(node) => { input = node }}
 				type="text"
 			/>
 			<button
-				onClick={() => {
-					dispatch(shorten(input.value))
-					input.value = ''
-				}}
+				disabled={!isValid}
+				onClick={isValid ?
+					() => {
+						dispatch(shorten(input.value))
+						input.value = ''
+					} :
+					null
+				}
 			>
 				Shorten
 			</button>
@@ -24,6 +31,10 @@ const ShortenContainer = ({ dispatch }) => {
 	)
 }
 
-const Shorten = connect()(ShortenContainer)
+const mapStateToProps = state => ({
+	isValid: state.isValid,
+})
+
+const Shorten = connect(mapStateToProps)(ShortenContainer)
 
 export default Shorten
