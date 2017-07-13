@@ -6,10 +6,10 @@ module.exports = {
 	},
 	rules: {
 		'no-tabs': 0,
-		indent: ['error', 'tab'],
+		'indent': ['error', 'tab'],
 		'react/jsx-indent': [2, 'tab'],
 		'react/jsx-indent-props': [2, 'tab'],
-		semi: [2, 'never'],
+		'semi': [2, 'never'],
 		'no-unexpected-multiline': 2,
 		'compat/compat': 2,
 		'comma-dangle': [
@@ -24,5 +24,8 @@ module.exports = {
 		],
 	},
 	plugins: ['compat', 'react'],
+	settings: {
+		polyfills: ['fetch'],
+	}
 }
 
