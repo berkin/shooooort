@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { shorten } from '../actions'
 import { validateUrl } from '../actions/validate'
 
-const ShortenContainer = ({ dispatch, isValid }) => {
+const ShortenContainer = ({ dispatch, result, isValid }) => {
 	let input
 
 	return (
@@ -27,12 +27,18 @@ const ShortenContainer = ({ dispatch, isValid }) => {
 			>
 				Shorten
 			</button>
+			{ result.hasOwnProperty('url') ? (
+				<div className="info">
+					shortcode for {result.url} is  {result.shortcode}
+				</div>) :
+				null }
 		</div>
 	)
 }
 
 const mapStateToProps = state => ({
-	isValid: state.isValid,
+	isValid: state.shortener.isValid,
+	result: state.shortener.shorten,
 })
 
 const Shorten = connect(mapStateToProps)(ShortenContainer)

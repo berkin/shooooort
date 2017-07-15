@@ -40,6 +40,10 @@ export const shorten = url => (dispatch) => {
 							dispatch({
 								type: SHORTEN_LINK_SUCCESS,
 								shortcode: data.shortcode,
+								url
+							})
+							dispatch({
+								type: SHORTEN_RESET,
 							})
 						}
 					}
