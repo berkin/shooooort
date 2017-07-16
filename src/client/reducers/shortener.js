@@ -9,13 +9,13 @@ import {
 	RESET_MESSAGE,
 } from '../constants'
 
-export const shorten = (state = {}, action) => {
+export const shortcodes = (state = [], action) => {
 	switch (action.type) {
 	case SHORTEN_LINK_SUCCESS:
-		return {
-			url: action.url,
-			shortcode: action.shortcode,
-		}
+		return [
+			action.shortcode,
+			...state,
+		]
 	default:
 		return state
 	}
@@ -58,7 +58,7 @@ export const message = (state = '', action) => {
 }
 
 export default combineReducers({
-	shorten,
+	shortcodes,
 	isFetching,
 	isValid,
 	message,

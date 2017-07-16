@@ -48,8 +48,10 @@ export const shorten = url => (dispatch, getState) => {
 						} else {
 							dispatch({
 								type: SHORTEN_LINK_SUCCESS,
-								shortcode: data.shortcode,
-								url
+								shortcode: {
+									url,
+									shortcode: data.shortcode
+								}
 							})
 						}
 						dispatch({

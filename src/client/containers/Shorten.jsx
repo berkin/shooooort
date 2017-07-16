@@ -4,7 +4,7 @@ import LoadingImage from '../../assets/img/Spinner.svg'
 import { shorten, resetShortener } from '../actions'
 import { validateUrl } from '../actions/validate'
 
-const ShortenContainer = ({ dispatch, result, isValid, isFetching, message }) => {
+const ShortenContainer = ({ dispatch, shortcodes, isValid, isFetching, message }) => {
 	let input
 
 	return (
@@ -44,17 +44,18 @@ const ShortenContainer = ({ dispatch, result, isValid, isFetching, message }) =>
 			<div className="error">
 				{ message ? ' ' : message }
 			</div>
-			{ result.hasOwnProperty('url') ? (
-				<ul className="shortcodes">
-					<li className="highlight">
-						<a className="shortcodes__title" href={result.shortcode}>
-							shoooooort.com/<span className="highlight">{result.shortcode}</span>
-						</a>
-						<span className="shortcodes__url">{result.url}</span>
-					</li>
-				</ul>) :
-				null
+			<ul className="shortcodes">
+				{
+					shortcodes.map((item, i) =>
+						<li key={item.shortcode} className={i === 0 ? 'highlight' : ''}>
+							<a className="shortcodes__title" href={item.shortcode}>
+								shoooooort.com/<span className="highlight">{item.shortcode}</span>
+							</a>
+							<span className="shortcodes__url">{item.url}</span>
+						</li>
+					)
 				}
+			</ul>
 		</div>
 	)
 }
@@ -62,7 +63,7 @@ const ShortenContainer = ({ dispatch, result, isValid, isFetching, message }) =>
 const mapStateToProps = state => ({
 	isFetching: state.shortener.isFetching,
 	isValid: state.shortener.isValid,
-	result: state.shortener.shorten,
+	shortcodes: state.shortener.shortcodes,
 	message: state.shortener.message,
 })
 
