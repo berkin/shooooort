@@ -9,6 +9,7 @@ const renderApp = title =>
 		<title>${title}</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="stylesheet" href="//localhost:${WDS_PORT}/dist/css/style.css">
+		<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
 	</head>
 	<body>
 		<div class="${APP_CONTAINER_CLASS}"></div>

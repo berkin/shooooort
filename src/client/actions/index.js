@@ -2,9 +2,18 @@ import {
 	SHORTEN_LINK_REQUEST,
 	SHORTEN_LINK_SUCCESS,
 	SHORTEN_LINK_FAILURE,
+	SHORTEN_RESET,
 } from '../constants'
 
-export const shorten = url => (dispatch) => {
+export const shorten = url => (dispatch, getState) => {
+	const shouldShorten = getState().shortener.isValid
+	if (!shouldShorten) {
+		return dispatch({
+			type: SHORTEN_LINK_FAILURE,
+			message: 'Unable to shorten that link. It is not a valid url.'
+		})
+	}
+
 	dispatch({
 		type: SHORTEN_LINK_REQUEST
 	})
@@ -13,7 +22,7 @@ export const shorten = url => (dispatch) => {
 	headers.append('Content-Type', 'application/json')
 	headers.append('Access-Control-Allow-Origin', '*')
 
-	fetch(
+	return fetch(
 		'http://localhost:1337/gymia-shorty.herokuapp.com/shorten',
 		{
 			headers,
@@ -42,10 +51,10 @@ export const shorten = url => (dispatch) => {
 								shortcode: data.shortcode,
 								url
 							})
-							dispatch({
-								type: SHORTEN_RESET,
-							})
 						}
+						dispatch({
+							type: SHORTEN_RESET
+						})
 					}
 				)
 			},
@@ -56,3 +65,7 @@ export const shorten = url => (dispatch) => {
 				})
 			)
 }
+
+export const resetShortener = () => ({
+	type: SHORTEN_RESET,
+})
